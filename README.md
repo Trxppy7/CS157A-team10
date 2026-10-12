@@ -1,8 +1,8 @@
 # PawMatch — CS157A Team 10
 
-Local development setup for Eclipse, Apache Tomcat, and MySQL. This scaffold
-contains a server check page and a JDBC connection check, not the application
-features described in the design report.
+Local development setup for Eclipse, Apache Tomcat, and MySQL. Tomcat serves
+the existing landing-page prototype alongside a server check page and a JDBC
+connection check. The prototype is not connected to the database.
 
 ## Requirements
 
@@ -34,13 +34,12 @@ it does not install Java or change your shell's `JAVA_HOME` automatically.
    The downloaded JAR is intentionally ignored by Git.
 5. Open the **Servers** view, add a Tomcat v11.0 server if needed, and use
    **Add and Remove…** to add `CS157A-team10`. Start the server.
-6. Open <http://localhost:8080/CS157A-team10/>. The setup page should report
-   Java 25. If port 8080 is occupied, change the server's HTTP port and use it
-   in the URL.
+6. Open <http://localhost:8080/CS157A-team10/> for the landing page. The server
+   check at <http://localhost:8080/CS157A-team10/index.jsp> should report Java 25.
+   If port 8080 is occupied, change the server's HTTP port and use it in the URL.
 
 The Java sources are in `src/main/java`; deployable web files are in
-`src/main/webapp`. The existing root `index.html` is the separate website
-prototype and is not changed or deployed by this setup.
+`src/main/webapp`. The landing page lives at `src/main/webapp/index.html`.
 
 ## Create and seed the local database
 
