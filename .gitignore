@@ -1,0 +1,6 @@
+/build/
+/.metadata/
+.DS_Store
+.env
+.env.*
+/src/main/webapp/WEB-INF/lib/*.jar
