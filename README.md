@@ -64,6 +64,23 @@ against a new `pawmatch` database. Re-running them reports existing tables or
 duplicate keys; they do not drop tables or overwrite existing rows. If a local
 `pawmatch` database already exists, inspect it before running either script.
 
+## Re-seed the local database
+
+**This deletes everything in the local `pawmatch` database**, including accounts
+and any changes made while testing. Use it only when you want the original
+sample data back. Stop the application first, and back up anything you need.
+
+From the repository root, run:
+
+```sh
+cat db/reset.sql db/schema.sql db/seed.sql | mysql --host=127.0.0.1 --port=3306 --user=root --password pawmatch
+```
+
+Change the local port or username if needed. Check the host and port before
+running it. The command drops the project tables, recreates the 14 sample tables, and
+loads 10 rows per table. Run it against an existing database with all its tables. If it reports an error, fix that error
+before starting the app again. Database creation is not transactional.
+
 ## Check the JDBC connection
 
 In Eclipse, right-click `src/main/java/MysqlCon.java` and select
