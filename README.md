@@ -1,110 +1,96 @@
-# PawMatch — CS157A Team 10
+# PawMatch
 
-Local development setup for Eclipse, Apache Tomcat, and MySQL. Tomcat serves
-the existing landing-page prototype alongside a server check page and a JDBC
-connection check. The prototype is not connected to the database.
+CS157A Team 10 project. Uses Java, JSP, Tomcat, and MySQL.
+The landing page is in `src/main/webapp/index.html`.
 
-## Requirements
+## Setup
 
-- JDK 25 (the project targets Java 25).
-- Eclipse IDE for Enterprise Java and Web Developers with Java 25 support.
-- Apache Tomcat 11.
-- MySQL Server and the `mysql` command-line client.
-- MySQL Connector/J 26.7.0, available from the
-  [official downloads](https://dev.mysql.com/downloads/connector/j/).
+You need JDK 25, Tomcat 11, MySQL, and MySQL Connector/J 26.7.0.
+For Eclipse, use the Enterprise Java and Web Developers version with Java 25 support.
 
-On macOS, JDK 25 can be installed with `brew install openjdk@25`. Select its
-`libexec/openjdk.jdk/Contents/Home` directory under the Homebrew installation
-when configuring an IDE. The `.java-version` file records the project version;
-it does not install Java or change your shell's `JAVA_HOME` automatically.
+Copy `mysql-connector-j-26.7.0.jar` into `src/main/webapp/WEB-INF/lib/`.
+Create that folder if it is missing. The jar is not included in Git.
 
-## Eclipse and Tomcat
-
-1. Import this repository through **File > Import > General > Existing Projects
-   into Workspace**. Keep the Eclipse workspace outside the repository.
-2. In **Settings/Preferences > Java > Installed JREs**, add your JDK 25 directory.
-   Under **Execution Environments**, associate **JavaSE-25** with that JDK.
-3. In **Server > Runtime Environments**, add **Apache Tomcat v11.0**, select your
-   extracted Tomcat installation, and select JDK 25 as its JRE. Keep the runtime
-   name `Apache Tomcat v11.0` to match the project's runtime reference.
-4. Download the platform-independent Connector/J archive and extract it. Copy
-   `mysql-connector-j-26.7.0.jar` into `src/main/webapp/WEB-INF/lib/` (create the
-   directory if needed). Refresh the project. Eclipse's **Web App Libraries**
-   adds the driver to the Java build path and deploys it with the web application.
-   The downloaded JAR is intentionally ignored by Git.
-5. Open the **Servers** view, add a Tomcat v11.0 server if needed, and use
-   **Add and Remove…** to add `CS157A-team10`. Start the server.
-6. Open <http://localhost:8080/CS157A-team10/> for the landing page. The server
-   check at <http://localhost:8080/CS157A-team10/index.jsp> should report Java 25.
-   If port 8080 is occupied, change the server's HTTP port and use it in the URL.
-
-The Java sources are in `src/main/java`; deployable web files are in
-`src/main/webapp`. The landing page lives at `src/main/webapp/index.html`.
-
-## Create and seed the local database
-
-Use a local MySQL account with permission to create the `pawmatch` database.
-From the repository root, run these commands in order:
+From the project folder:
 
 ```sh
-mysql --host=127.0.0.1 --port=3306 --user=root --password -e "CREATE DATABASE pawmatch"
-mysql --host=127.0.0.1 --port=3306 --user=root --password pawmatch < db/schema.sql
-mysql --host=127.0.0.1 --port=3306 --user=root --password pawmatch < db/seed.sql
+cp .env.example .env
 ```
 
-Use your local port and username if different. `--password` prompts for the
-password; do not put it in a command or commit it. You can also open and execute
-each SQL file, in that order, in MySQL Workbench against the same local server.
+Edit `.env` with your MySQL username, password, and port. Use `KEY=value`
+without quotes. If a value contains a backslash, write it as `\\`.
+Keep this file on your computer; Git ignores it.
 
-`db/schema.sql` creates the 14 tables in the selected `pawmatch` database. `db/seed.sql` is the supplied fictional dataset, with 10 rows per table.
-The seed file contains INSERT statements with foreign-key checks enabled.
+## Run in Eclipse
 
-These are first-time setup scripts, not migrations or reset commands. Run them
-against a new `pawmatch` database. Re-running them reports existing tables or
-duplicate keys; they do not drop tables or overwrite existing rows. If a local
-`pawmatch` database already exists, inspect it before running either script.
+1. Import with **File > Import > General > Existing Projects into Workspace**.
+2. Add JDK 25 under **Java > Installed JREs** and select it for **JavaSE-25**.
+3. Add your Tomcat installation under **Server > Runtime Environments**.
+   Name it `Apache Tomcat v11.0` and use JDK 25.
+4. Refresh the project after copying the MySQL jar.
+5. In the **Servers** tab, create a Tomcat 11 server and add `CS157A-team10`.
+6. In the server's launch configuration, add the environment variable
+   `PAWMATCH_CONFIG` with the full path to your `.env` file. Start the server.
 
-## Re-seed the local database
+Open <http://localhost:8080/CS157A-team10/>.
+If Eclipse uses a different port, change the URL to match.
+`index.jsp` is a small page for checking that Tomcat is using Java 25.
 
-**This deletes everything in the local `pawmatch` database**, including accounts
-and any changes made while testing. Use it only when you want the original
-sample data back. Stop the application first, and back up anything you need.
-
-From the repository root, run:
+## Run from Cursor or a terminal
 
 ```sh
-cat db/reset.sql db/schema.sql db/seed.sql | mysql --host=127.0.0.1 --port=3306 --user=root --password pawmatch
+./run.sh
 ```
 
-Change the local port or username if needed. Check the host and port before
-running it. The command drops the project tables, recreates the 14 sample tables, and
-loads 10 rows per table. Run it against an existing database with all its tables. If it reports an error, fix that error
-before starting the app again. Database creation is not transactional.
+Open <http://localhost:8081/CS157A-team10/>. Ctrl+C stops it.
+`./build.sh` builds the WAR without starting Tomcat.
 
-## Check the JDBC connection
+The scripts use JDK 25 and the Homebrew Tomcat folder on macOS by default.
+Set `JAVA_HOME` and `TOMCAT_HOME` if yours are somewhere else.
+Set `PORT` if 8081 is taken. The scripts also work on Linux with these paths set.
+They use `.local/tomcat` for this project's server files.
 
-In Eclipse, right-click `src/main/java/MysqlCon.java` and select
-**Run As > Java Application**. Under the run configuration's **Environment** tab,
-set `DB_PASSWORD` to your local database password. Optionally set `DB_USER`
-(default `root`) and `DB_URL` (default `jdbc:mysql://127.0.0.1:3306/pawmatch`).
-Keep credentials in your local run configuration, not a shared launch file.
+## Database
 
-From Cursor's terminal, with JDK 25 on `PATH`:
+The app creates `pawmatch` and loads the sample data on its first run.
+Your MySQL user needs permission to create the database and tables.
+There are 14 tables in `db/schema.sql` and 10 sample rows per table in
+`db/seed.sql`. Later runs keep the data already there.
+
+If only some tables or sample data are present, or a required column is
+missing or has the wrong type, startup stops and prints the problem in the
+Tomcat log. Check the database before resetting it. MySQL table creation
+cannot be rolled back.
+
+To load the files yourself, create a new database and then select it:
 
 ```sh
-mkdir -p build/classes
-javac --release 25 -d build/classes src/main/java/MysqlCon.java
-java -cp 'build/classes:src/main/webapp/WEB-INF/lib/*' MysqlCon
+mysql -h 127.0.0.1 -P 3306 -u root -p -e "CREATE DATABASE pawmatch"
+mysql -h 127.0.0.1 -P 3306 -u root -p pawmatch < db/schema.sql
+mysql -h 127.0.0.1 -P 3306 -u root -p pawmatch < db/seed.sql
 ```
 
-The terminal command prompts for the password. If your server uses another
-port, set the URL before running it, for example:
+Use your port and username. The SQL files use the database selected on the
+command line. They are for an empty database; running them again can give
+duplicate-table or duplicate-row errors.
+
+## Reset the sample data
+
+**This deletes everything in `pawmatch`.** Stop the app first and save
+anything you need. Check the host and port, then run from the project folder:
 
 ```sh
-export DB_URL='jdbc:mysql://127.0.0.1:3307/pawmatch'
+cat db/reset.sql db/schema.sql db/seed.sql | mysql -h 127.0.0.1 -P 3306 -u root -p pawmatch
 ```
 
-On Windows, use `;` instead of `:` between the Java classpath entries. A fresh
-seed should print `Connected to pawmatch`, followed by 10 owners, 10 pets, and
-10 bookings. This checks JDBC connectivity; the setup page itself does not
-query the database.
+The reset drops each table in dependency order. Run it against an existing
+`pawmatch` database with all its tables.
+Enter your local MySQL password when asked. Change the port or username if
+needed. Fix any SQL errors before starting the app again.
+
+## JDBC check
+
+In Eclipse, run `src/main/java/MysqlCon.java` as a Java application.
+Set `DB_PASSWORD` in its run configuration. You can also set `DB_USER`
+and `DB_URL` if you are not using root at `127.0.0.1:3306`.
+With the original sample data it should print 10 owners, 10 pets, and 10 bookings.
