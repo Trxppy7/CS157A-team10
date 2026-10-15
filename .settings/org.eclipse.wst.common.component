@@ -2,6 +2,7 @@
     <wb-module deploy-name="CS157A-team10">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes/sql" source-path="/db"/>
         <property name="context-root" value="CS157A-team10"/>
         <property name="java-output-path" value="/CS157A-team10/build/classes"/>
     </wb-module>
