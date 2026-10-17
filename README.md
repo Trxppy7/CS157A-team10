@@ -83,8 +83,6 @@ anything you need. Check the host and port, then run from the project folder:
 cat db/reset.sql db/schema.sql db/seed.sql | mysql -h 127.0.0.1 -P 3306 -u root -p pawmatch
 ```
 
-The reset drops each table in dependency order. Run it against an existing
-`pawmatch` database with all its tables.
 Enter your local MySQL password when asked. Change the port or username if
 needed. Fix any SQL errors before starting the app again.
 
