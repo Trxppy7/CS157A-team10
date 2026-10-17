@@ -85,6 +85,10 @@ public class Db {
                 checkColumns(connection, table.getKey(), table.getValue());
             }
 
+            String accounts = resource("accounts.sql");
+            executeScript(connection, accounts);
+            checkColumns(connection, "Accounts", accounts);
+
             int empty = 0;
             for (String table : tables.keySet()) {
                 try (Statement statement = connection.createStatement();
