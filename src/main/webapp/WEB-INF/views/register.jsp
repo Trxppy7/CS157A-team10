@@ -1,7 +1,6 @@
 <%@ include file="head.jspf" %>
 <main id="main" class="auth-main">
   <div class="page-intro"><span class="eyebrow">Join PawMatch</span><h1>Create an account</h1><p>A place for pet owners and the people who care for them.</p></div>
-  <% if ("1".equals(request.getParameter("created"))) { %><p class="notice success" role="status">Your account is ready.</p><% } %>
   <% if (request.getAttribute("message") != null) { %><p class="notice error" role="alert"><%= Web.escape(request.getAttribute("message")) %></p><% } %>
   <% if (request.getAttribute("errors") != null) { %><p class="notice error" role="alert">Check the fields below.</p><% } %>
   <form class="surface" method="post" action="<%= request.getContextPath() %>/register">
@@ -20,5 +19,6 @@
     <div class="field"><label for="password">Password</label><input id="password" name="password"<%= Web.invalid(request, "password") %> type="password" autocomplete="new-password" minlength="8" maxlength="128" required><small id="password-help">Use at least 8 characters.</small><%= Web.error(request, "password") %></div>
     <button class="button primary" type="submit">Create account</button>
   </form>
+  <p class="form-footer">Already have an account? <a href="<%= request.getContextPath() %>/login">Log in</a></p>
 </main>
 <%@ include file="foot.jspf" %>

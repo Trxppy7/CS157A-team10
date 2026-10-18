@@ -14,5 +14,10 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="<%= request.getContextPath() %>/" aria-label="PawMatch home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><circle cx="7" cy="9" r="2.4"/><circle cx="13" cy="5.7" r="2.4"/><circle cx="19" cy="6.5" r="2.4"/><circle cx="24" cy="11" r="2.4"/><path d="M15 13c-2.5 0-4 2.4-6.3 4.8-1.4 1.5-1.3 4.2.4 5.4 1.5 1.1 3 .5 5.9-.1 2.9.6 4.5 1.2 5.9.1 1.7-1.2 1.9-3.9.4-5.4C18.8 15.4 17.5 13 15 13Z"/></svg></span>PawMatch</a>
-  <nav aria-label="Account navigation"><a href="<%= request.getContextPath() %>/">Back to home</a></nav>
+  <nav aria-label="Account navigation">
+  <% if (session.getAttribute("accountId") != null) { %>
+    <a href="<%= request.getContextPath() %>/<%= Web.escape(session.getAttribute("role")) %>/home">My account</a>
+    <form method="post" action="<%= request.getContextPath() %>/logout"><input type="hidden" name="csrf" value="<%= Web.csrf(request) %>"><button class="text-button" type="submit">Log out</button></form>
+  <% } else { %><a href="<%= request.getContextPath() %>/login">Log in</a><% } %>
+  </nav>
 </header>

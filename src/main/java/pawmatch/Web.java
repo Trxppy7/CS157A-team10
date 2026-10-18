@@ -23,7 +23,8 @@ public class Web {
     }
 
     public static String value(HttpServletRequest request, String name) {
-        return escape(request.getParameter(name));
+        String value = request.getParameter(name);
+        return escape(value == null ? request.getAttribute(name) : value);
     }
 
     public static boolean validEmail(String value) {

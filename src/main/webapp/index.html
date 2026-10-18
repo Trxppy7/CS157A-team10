@@ -29,6 +29,7 @@
     .brand-mark{display:grid;place-items:center;width:37px;height:37px;background:var(--forest);color:var(--lime);border-radius:12px 12px 12px 3px;transform:rotate(-7deg)}
     .brand-mark svg{width:23px;height:23px;transform:rotate(7deg)}
     .nav-links{display:flex;align-items:center;gap:36px;margin-left:auto;margin-right:28px}
+    .login-link{font-size:13px;font-weight:700;white-space:nowrap}
     .nav-links a{font-size:13px;font-weight:700;transition:color .2s}
     .nav-links a:hover{color:#d26f52}
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:50px;padding:0 23px;border:1px solid transparent;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;transition:transform .25s,background .25s,box-shadow .25s}
@@ -166,6 +167,7 @@
     @media(max-width:780px){.container{width:min(100% - 36px,1320px)}.header{height:72px}.nav-links{display:none}.hero{grid-template-columns:1fr;padding-top:30px;padding-bottom:101px;gap:20px}.hero-copy{padding:0}.hero h1{font-size:clamp(62px,11vw,88px);max-width:690px}.hero p{font-size:16px}.hero-visual{width:min(100%,640px);margin:20px auto 0}.hero-photo{height:460px;min-height:0}.photo-tag{left:8px}.visit-float{right:0}.ribbon-inner{justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:17px 0}.ribbon-item{font-size:19px}.ribbon-arrow{font-size:18px}.section{padding-block:80px}.steps{grid-template-columns:1fr;gap:13px;margin-top:38px}.step{min-height:230px}.step h3{margin-top:11px}.tracker-section{padding-block:80px}.tracker-layout,.two-col,.builder-grid,.faq{grid-template-columns:1fr}.tracker-demo{justify-self:stretch}.cat-photo{height:440px}.caregiver-copy{max-width:600px}.builder-grid{gap:35px}.builder-aside{margin-top:22px}.faq{gap:18px}.footer-top{padding-bottom:55px}}
     @media(max-width:520px){.topline{font-size:10px}.header .btn{min-height:43px;padding-inline:15px;font-size:11px}.brand{font-size:23px}.brand-mark{width:33px;height:33px}.hero h1{font-size:clamp(53px,12.5vw,70px)}.hero-actions{align-items:stretch}.hero-actions .btn{width:100%}.hero-photo{height:370px;object-position:66% center}.photo-tag{top:17px;font-size:12px}.visit-float{width:250px;bottom:-54px;padding:14px}.float-title{font-size:18px}.ribbon-inner{justify-content:flex-start;gap:9px 12px;padding:17px 0}.ribbon-item{font-size:15px}.ribbon-item b{width:22px;height:22px;font-size:9px}.ribbon-arrow{font-size:13px}.section h2,.tracker-copy h2{font-size:47px}.section-lede,.tracker-copy p,.caregiver-copy p,.builder-copy p{font-size:15px}.tracker-demo,.request-card{padding:20px}.demo-top h3{font-size:24px}.demo-sub strong{font-size:21px}.cat-photo{height:340px}.photo-sticker{width:101px;height:101px;font-size:15px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.footer-top,.footer-bottom{flex-direction:column}.footer-tag{font-size:23px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+    @media(max-width:520px){.header{gap:10px}.header .brand{font-size:22px}.header .brand-mark{width:32px;height:32px}.header .btn{padding-inline:14px}}
   </style>
 </head>
 <body>
@@ -173,6 +175,7 @@
   <header class="container header">
     <a class="brand" href="#top" aria-label="PawMatch home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 30 30" fill="currentColor"><circle cx="7" cy="9" r="2.4"/><circle cx="13" cy="5.7" r="2.4"/><circle cx="19" cy="6.5" r="2.4"/><circle cx="24" cy="11" r="2.4"/><path d="M15 13c-2.5 0-4 2.4-6.3 4.8-1.4 1.5-1.3 4.2.4 5.4 1.5 1.1 3 .5 5.9-.1 2.9.6 4.5 1.2 5.9.1 1.7-1.2 1.9-3.9.4-5.4C18.8 15.4 17.5 13 15 13Z"/></svg></span>PawMatch</a>
     <nav class="nav-links" aria-label="Main navigation"><a href="#how-it-works">How it works</a><a href="#visit-tracker">Visit tracker</a><a href="#caregivers">For caregivers</a></nav>
+    <a class="login-link" href="login">Log in</a>
     <a class="btn btn-dark" href="register">Create account</a>
   </header>
   <main id="top">
