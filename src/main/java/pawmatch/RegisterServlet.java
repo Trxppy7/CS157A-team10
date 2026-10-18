@@ -81,7 +81,8 @@ public class RegisterServlet extends HttpServlet {
                         account.executeUpdate();
                     }
                     connection.commit();
-                    response.sendRedirect(request.getContextPath() + "/register?created=1");
+                    request.getSession().setAttribute("registeredEmail", email);
+                    response.sendRedirect(request.getContextPath() + "/login?created=1");
                     return;
                 } catch (SQLException error) {
                     connection.rollback();
