@@ -55,7 +55,10 @@ They use `.local/tomcat` for this project's server files.
 The app creates `pawmatch` and loads the sample data on its first run.
 Your MySQL user needs permission to create the database and tables.
 There are 14 tables in `db/schema.sql` and 10 sample rows per table in
-`db/seed.sql`. Later runs keep the data already there.
+`db/seed.sql`. The app also creates `Accounts` for logins. Later runs keep
+the data already there.
+Sample owners and caregivers are not login accounts. Create an account with
+a different email on the registration page.
 
 If only some tables or sample data are present, or a required column is
 missing or has the wrong type, startup stops and prints the problem in the
@@ -81,6 +84,7 @@ anything you need. Check the host and port, then run from the project folder:
 cat db/reset.sql db/schema.sql db/seed.sql | mysql -h 127.0.0.1 -P 3306 -u root -p
 ```
 
+After the reset, restart the app to recreate the empty account tables.
 Enter your local MySQL password when asked. Change the port or username if
 needed. Fix any SQL errors before starting the app again.
 
@@ -90,3 +94,28 @@ In Eclipse, run `src/main/java/MysqlCon.java` as a Java application.
 Set `DB_PASSWORD` in its run configuration. You can also set `DB_USER`
 and `DB_URL` if you are not using root at `127.0.0.1:3306`.
 With the original sample data it should print 10 owners, 10 pets, and 10 bookings.
+
+## Try the account pages
+
+Create an owner account and a caregiver account with different emails.
+Log in to each and check its account page, then log out. The other role's
+pages should give an error.
+Passwords are hashed; names, addresses, and phone numbers are ordinary text.
+
+For a local admin account, run `./build.sh`, then:
+
+```sh
+java -cp build/classes pawmatch.Passwords
+```
+
+Enter a password and copy the printed hash into this SQL in MySQL Workbench:
+
+```sql
+USE pawmatch;
+INSERT INTO Accounts (email, password_hash, role)
+VALUES ('admin@example.com', 'paste the hash here', 'admin');
+```
+
+Change the email if needed. There is no admin signup page. The app currently
+covers account creation, login/logout, and role access.
+The landing-page care request is still just a demo.

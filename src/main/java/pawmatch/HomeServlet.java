@@ -18,14 +18,6 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("accountId") == null) {
-            response.sendRedirect(request.getContextPath() + "/login?required=1");
-            return;
-        }
-        String role = (String) session.getAttribute("role");
-        if (!request.getServletPath().startsWith("/" + role + "/")) {
-            response.sendError(403); return;
-        }
         try (Connection connection = Db.open(); PreparedStatement query = connection.prepareStatement(
                 "SELECT a.email, COALESCE(o.name, c.name, 'Administrator') AS name, COALESCE(o.phone_number, c.phone_number, '') AS phone "
                 + "FROM Accounts a LEFT JOIN Owners o ON a.owner_id = o.owner_id LEFT JOIN Caregivers c ON a.caregiver_id = c.caregiver_id WHERE a.account_id = ?")) {
