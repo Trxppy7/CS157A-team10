@@ -55,7 +55,11 @@ public class Web {
         return "<small class=\"error-text\" id=\"" + field + "-error\">" + escape(errors.get(field)) + "</small>";
     }
 
+    @SuppressWarnings("unchecked")
     public static String invalid(HttpServletRequest request, String field) {
-        return error(request, field).isEmpty() ? "" : " aria-invalid=\"true\" aria-describedby=\"" + field + "-error\"";
+        Map<String, String> errors = (Map<String, String>) request.getAttribute("errors");
+        if (errors == null || !errors.containsKey(field)) return "";
+        String focus = errors.keySet().iterator().next().equals(field) ? " autofocus" : "";
+        return " aria-invalid=\"true\" aria-describedby=\"" + field + "-error\"" + focus;
     }
 }

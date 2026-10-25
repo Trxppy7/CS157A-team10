@@ -18,14 +18,6 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("accountId") == null) {
-            response.sendRedirect(request.getContextPath() + "/login?required=1");
-            return;
-        }
-        String role = (String) session.getAttribute("role");
-        if (!request.getServletPath().startsWith("/" + role + "/")) {
-            response.sendError(403); return;
-        }
         try (Connection connection = Db.open()) {
             String email;
             int ownerId = 0, caregiverId = 0;

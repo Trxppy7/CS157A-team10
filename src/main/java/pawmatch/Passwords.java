@@ -19,14 +19,30 @@ public class Passwords {
 
     public static boolean matches(String password, String stored) {
         try {
+            if (stored == null) return false;
             String[] parts = stored.split(":");
+            if (parts.length != 3) return false;
             int iterations = Integer.parseInt(parts[0]);
-            if (parts.length != 3 || iterations < 1 || iterations > ITERATIONS) return false;
+            if (iterations < 1 || iterations > ITERATIONS) return false;
             byte[] salt = Base64.getDecoder().decode(parts[1]);
             byte[] expected = Base64.getDecoder().decode(parts[2]);
             return MessageDigest.isEqual(expected, derive(password, salt, iterations));
         } catch (IllegalArgumentException error) {
             return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        java.io.Console console = System.console();
+        if (console == null) throw new IllegalStateException("Run this from a terminal.");
+        char[] password = console.readPassword("Password (8 to 128 characters): ");
+        if (password == null || password.length < 8 || password.length > 128) {
+            throw new IllegalArgumentException("Use 8 to 128 characters.");
+        }
+        try {
+            System.out.println(hash(new String(password)));
+        } finally {
+            java.util.Arrays.fill(password, '\0');
         }
     }
 

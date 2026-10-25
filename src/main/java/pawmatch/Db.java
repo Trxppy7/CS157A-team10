@@ -120,20 +120,23 @@ public class Db {
 
     private static void checkColumns(Connection connection, String table, String definition) throws SQLException {
         Map<String, String> actual = new LinkedHashMap<>();
+        Map<String, Integer> sizes = new LinkedHashMap<>();
         try (Statement statement = connection.createStatement();
              ResultSet rows = statement.executeQuery("SELECT * FROM `" + table + "` WHERE 1 = 0")) {
             ResultSetMetaData metadata = rows.getMetaData();
             for (int i = 1; i <= metadata.getColumnCount(); i++) {
                 actual.put(metadata.getColumnName(i), metadata.getColumnTypeName(i));
+                sizes.put(metadata.getColumnName(i), metadata.getPrecision(i));
             }
         }
-        Matcher columns = Pattern.compile("(?m)^\\s+(\\w+)\\s+(INT|VARCHAR|DECIMAL|DATETIME|DATE|BOOLEAN)\\b").matcher(definition);
+        Matcher columns = Pattern.compile("(?m)^\\s+(\\w+)\\s+(INT|VARCHAR|DECIMAL|DATETIME|DATE|BOOLEAN)\\b(?:\\((\\d+)(?:,\\d+)?\\))?").matcher(definition);
         while (columns.find()) {
             String expected = columns.group(2);
             if (expected.equals("BOOLEAN")) expected = "TINYINT";
             String type = actual.get(columns.group(1));
             if (expected.equals("TINYINT") && "BIT".equalsIgnoreCase(type)) type = "TINYINT";
-            if (type == null || !type.equalsIgnoreCase(expected)) {
+            boolean tooSmall = columns.group(3) != null && sizes.getOrDefault(columns.group(1), 0) < Integer.parseInt(columns.group(3));
+            if (type == null || !type.equalsIgnoreCase(expected) || tooSmall) {
                 throw new SQLException("Incompatible column " + table + "." + columns.group(1) + "; expected " + expected + ". No data was replaced.");
             }
         }
