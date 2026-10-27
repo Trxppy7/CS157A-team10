@@ -6,5 +6,12 @@
     <div><dt>Email</dt><dd><%= Web.escape(request.getAttribute("email")) %></dd></div>
     <div><dt>Phone</dt><dd><%= Web.escape(request.getAttribute("phone")) %></dd></div>
   </dl>
+  <% if ("owner".equals(session.getAttribute("role"))) { %>
+    <p class="form-footer">
+      <a class="button primary" href="<%= request.getContextPath() %>/owner/edit-profile">
+        Edit Profile
+      </a>
+    </p>
+  <% } %>
 </main>
 <%@ include file="foot.jspf" %>
