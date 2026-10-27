@@ -11,6 +11,13 @@ For Eclipse, use the Enterprise Java and Web Developers version with Java 25 sup
 Copy `mysql-connector-j-26.7.0.jar` into `src/main/webapp/WEB-INF/lib/`.
 Create that folder if it is missing. The jar is not included in Git.
 
+Password recovery also needs these jars in the same folder:
+
+- [jakarta.mail-api-2.1.5.jar](https://repo.maven.apache.org/maven2/jakarta/mail/jakarta.mail-api/2.1.5/jakarta.mail-api-2.1.5.jar)
+- [angus-mail-2.0.5.jar](https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-mail/2.0.5/angus-mail-2.0.5.jar)
+- [jakarta.activation-api-2.1.4.jar](https://repo.maven.apache.org/maven2/jakarta/activation/jakarta.activation-api/2.1.4/jakarta.activation-api-2.1.4.jar)
+- [angus-activation-2.0.3.jar](https://repo.maven.apache.org/maven2/org/eclipse/angus/angus-activation/2.0.3/angus-activation-2.0.3.jar)
+
 From the project folder:
 
 ```sh
@@ -56,7 +63,7 @@ The app creates `pawmatch` and loads the sample data on its first run.
 Your MySQL user needs permission to create the database and tables.
 There are 14 tables in `db/schema.sql` and 10 sample rows per table in
 `db/seed.sql`. The app also creates `Accounts` for logins. Later runs keep
-the data already there.
+the data already there. Password recovery adds `PasswordResetTokens`.
 Sample owners and caregivers are not login accounts. Create an account with
 a different email on the registration page.
 
@@ -64,6 +71,8 @@ If only some tables or sample data are present, or a required column is
 missing or has the wrong type, startup stops and prints the problem in the
 Tomcat log. Check the database before resetting it. MySQL table creation
 cannot be rolled back.
+Older local databases can keep their decimal money columns and date columns;
+the app does not convert or delete those values.
 
 To load the files yourself, create a new database and then select it:
 
@@ -102,7 +111,8 @@ With the original sample data it should print 10 owners, 10 pets, and 10 booking
 ## Try the account pages
 
 Create an owner account and a caregiver account with different emails.
-Log in to each and check its account page, then log out. The other role's
+Log in to each and check its account page, then log out. Owners can use
+Edit Profile to change their name, email and phone. The other role's
 pages should give an error.
 Passwords are hashed; names, addresses, and phone numbers are ordinary text.
 
@@ -121,5 +131,14 @@ VALUES (100, 'admin@example.com', 'paste the hash here', 'admin');
 ```
 
 Change the email if needed. There is no admin signup page. The app currently
-covers account creation, login/logout, and role access.
+covers account creation, login/logout, role access, owner profile editing,
+and password recovery.
 The landing-page care request is still just a demo.
+
+## Password recovery
+
+Set the SMTP fields in `.env` to your mail server's settings. Set `APP_BASE_URL`
+to the address you use for the app: port 8081 for `run.sh`, usually 8080 in Eclipse.
+Without SMTP settings, the app runs but cannot send recovery emails.
+Reset links expire after 30 minutes and work once. A successful reset invalidates
+the account's other links. Reset records are stored in MySQL.

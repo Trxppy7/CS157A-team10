@@ -11,6 +11,10 @@ if [[ ! -f "$PAWMATCH_CONFIG" && -z "${DB_PASSWORD+x}" ]]; then
   echo 'Copy .env.example to .env and enter your local MySQL settings first.' >&2
   exit 1
 fi
+if command -v lsof >/dev/null && lsof -nP -iTCP:"$PORT" -sTCP:LISTEN >/dev/null; then
+  echo "Port $PORT is already in use. Stop that server or choose another PORT before running again." >&2
+  exit 1
+fi
 ./build.sh
 export CATALINA_HOME="$TOMCAT_HOME"
 export CATALINA_BASE="$ROOT/.local/tomcat"

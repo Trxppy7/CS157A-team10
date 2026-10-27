@@ -15,6 +15,12 @@ if ! compgen -G 'src/main/webapp/WEB-INF/lib/mysql-connector-*.jar' > /dev/null;
   echo 'Copy MySQL Connector/J into src/main/webapp/WEB-INF/lib first.' >&2
   exit 1
 fi
+for dependency in jakarta.mail-api angus-mail jakarta.activation-api angus-activation; do
+  if ! compgen -G "src/main/webapp/WEB-INF/lib/$dependency-*.jar" > /dev/null; then
+    echo "Copy $dependency into src/main/webapp/WEB-INF/lib; see README.md." >&2
+    exit 1
+  fi
+done
 rm -rf build/classes
 mkdir -p build/classes
 find src/main/java -name '*.java' > build/sources.txt

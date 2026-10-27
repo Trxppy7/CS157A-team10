@@ -45,6 +45,12 @@ public class Db {
     }
 
     private static Connection connect(String database) throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException error) {
+            throw new SQLException("MySQL JDBC driver is unavailable.", error);
+        }
+
         String password = setting("DB_PASSWORD", null);
         if (password == null) {
             throw new SQLException("Set DB_PASSWORD in .env or the environment. See .env.example.");
@@ -88,6 +94,9 @@ public class Db {
             String accounts = resource("accounts.sql");
             if (!existing.contains("accounts")) executeScript(connection, accounts);
             checkColumns(connection, "Accounts", accounts);
+            String passwordReset = resource("password_reset.sql");
+            executeScript(connection, passwordReset);
+            checkColumns(connection, "PasswordResetTokens", passwordReset);
 
             int empty = 0;
             for (String table : tables.keySet()) {
@@ -135,8 +144,11 @@ public class Db {
             if (expected.equals("BOOLEAN")) expected = "TINYINT";
             String type = actual.get(columns.group(1));
             if (expected.equals("TINYINT") && "BIT".equalsIgnoreCase(type)) type = "TINYINT";
-            boolean tooSmall = columns.group(3) != null && sizes.getOrDefault(columns.group(1), 0) < Integer.parseInt(columns.group(3));
-            if (type == null || !type.equalsIgnoreCase(expected) || tooSmall) {
+            // Keep older local databases without converting their saved money or date values.
+            boolean legacyType = (expected.equals("INT") && ("DECIMAL".equalsIgnoreCase(type) || "TINYINT".equalsIgnoreCase(type) || "BIT".equalsIgnoreCase(type)))
+                    || (expected.equals("VARCHAR") && ("DATE".equalsIgnoreCase(type) || "DATETIME".equalsIgnoreCase(type)));
+            boolean tooSmall = !legacyType && columns.group(3) != null && sizes.getOrDefault(columns.group(1), 0) < Integer.parseInt(columns.group(3));
+            if (type == null || (!type.equalsIgnoreCase(expected) && !legacyType) || tooSmall) {
                 throw new SQLException("Incompatible column " + table + "." + columns.group(1) + "; expected " + expected + ". No data was replaced.");
             }
         }
