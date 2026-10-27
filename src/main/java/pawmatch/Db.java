@@ -45,6 +45,12 @@ public class Db {
     }
 
     private static Connection connect(String database) throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException error) {
+            throw new SQLException("MySQL JDBC driver is unavailable.", error);
+        }
+
         String password = setting("DB_PASSWORD", null);
         if (password == null) {
             throw new SQLException("Set DB_PASSWORD in .env or the environment. See .env.example.");
@@ -88,6 +94,9 @@ public class Db {
             String accounts = resource("accounts.sql");
             executeScript(connection, accounts);
             checkColumns(connection, "Accounts", accounts);
+            String passwordReset = resource("password_reset.sql");
+            executeScript(connection, passwordReset);
+            checkColumns(connection, "PasswordResetTokens", passwordReset);
 
             int empty = 0;
             for (String table : tables.keySet()) {
