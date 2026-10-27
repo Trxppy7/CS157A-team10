@@ -87,6 +87,7 @@ public class EditOwnerProfileServlet extends HttpServlet {
 
                     try (ResultSet rows = check.executeQuery()) {
                         if (rows.next()) {
+                            connection.rollback();
                             response.setStatus(400);
                             request.setAttribute("message", "This email is already in use.");
                             request.setAttribute("name", name);
@@ -95,7 +96,6 @@ public class EditOwnerProfileServlet extends HttpServlet {
                             request.setAttribute("title", "Edit Profile");
                             request.getRequestDispatcher("/WEB-INF/views/edit-owner-profile.jsp")
                                     .forward(request, response);
-                            connection.rollback();
                             return;
                         }
                     }
