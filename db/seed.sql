@@ -58,17 +58,29 @@ INSERT INTO Pets (pet_id, owner_id, contact_name, conditions, species, name) VAL
 (9, 9, 'James Davis', 'High energy; needs supervised group play', 'Dog', 'Bailey'),
 (10, 10, 'Ella Brown', 'No known medical conditions', 'Cat', 'Nala');
 
-INSERT INTO CareRequests (request_id, service_id, pet_id) VALUES
-(1, 1, 1),
-(2, 5, 2),
-(3, 6, 3),
-(4, 2, 4),
-(5, 2, 5),
-(6, 7, 6),
-(7, 8, 7),
-(8, 9, 8),
-(9, 4, 9),
-(10, 5, 10);
+INSERT INTO CareRequests (request_id, service_id, pet_id, location, instructions, status, created_at) VALUES
+(1, 1, 1, 'San Jose, CA', 'Buddy pulls on the leash; a short morning walk is best.', 'booked', '2026-10-01 08:30:00'),
+(2, 5, 2, 'Santa Clara, CA', 'Luna is shy with strangers; let her come to you.', 'booked', '2026-10-01 09:00:00'),
+(3, 6, 3, 'San Jose, CA', 'Cooper is a puppy and needs frequent bathroom breaks.', 'booked', '2026-10-01 10:15:00'),
+(4, 2, 4, 'Palo Alto, CA', 'Daisy has a sensitive stomach; only the food we provide.', 'booked', '2026-10-02 08:00:00'),
+(5, 2, 5, 'San Francisco, CA', 'Kiwi needs gentle handling; avoid loud noises.', 'booked', '2026-10-02 09:20:00'),
+(6, 7, 6, 'Oakland, CA', 'Max has arthritis; keep walks short and slow.', 'booked', '2026-10-02 12:45:00'),
+(7, 8, 7, 'Pleasanton, CA', 'Bella takes thyroid medication at 6 PM daily.', 'booked', '2026-10-03 15:30:00'),
+(8, 9, 8, 'Santa Rosa, CA', 'Rocky gets anxious in cars; drive calmly.', 'booked', '2026-10-04 11:10:00'),
+(9, 4, 9, 'Salinas, CA', 'Bailey is high energy and needs supervised play.', 'booked', '2026-10-05 07:40:00'),
+(10, 5, 10, 'Stockton, CA', 'Nala is easygoing; fresh water and a clean litter box.', 'booked', '2026-10-06 14:00:00');
+
+INSERT INTO RequestVisits (request_visit_id, request_id, visit_date, visit_time) VALUES
+(1, 1, '2026-10-03', '08:00'),
+(2, 2, '2026-10-04', '09:30'),
+(3, 3, '2026-10-05', '07:00'),
+(4, 4, '2026-10-06', '12:00'),
+(5, 5, '2026-10-07', '10:00'),
+(6, 6, '2026-10-08', '14:00'),
+(7, 7, '2026-10-09', '17:30'),
+(8, 8, '2026-10-10', '11:00'),
+(9, 9, '2026-10-11', '08:30'),
+(10, 10, '2026-10-12', '15:00');
 
 INSERT INTO Bookings (booking_id, caregiver_id, request_id) VALUES
 (1, 1, 1),
