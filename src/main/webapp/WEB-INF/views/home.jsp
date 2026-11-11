@@ -11,6 +11,9 @@
       <a class="button primary" href="<%= request.getContextPath() %>/owner/edit-profile">
         Edit Profile
       </a>
+      <a class="button primary" href="<%= request.getContextPath() %>/owner/pets">
+        My Pets
+      </a>
     </p>
   <% } %>
 </main>
