@@ -44,6 +44,18 @@ public class Db {
         return connect("pawmatch");
     }
 
+    // Returns the next integer id for a table whose ids are assigned by the app.
+    // Callers hold one open connection and serialize inserts (see the servlets'
+    // synchronized doPost) so two requests cannot pick the same id. Swap this for
+    // database-generated ids before running more than one copy of the app.
+    public static int nextId(Connection connection, String table, String idColumn) throws SQLException {
+        try (Statement statement = connection.createStatement();
+             ResultSet rows = statement.executeQuery("SELECT MAX(" + idColumn + ") FROM " + table)) {
+            rows.next();
+            return rows.getInt(1) + 1;
+        }
+    }
+
     private static Connection connect(String database) throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -67,8 +79,8 @@ public class Db {
         while (definitions.find()) {
             tables.put(definitions.group(1), definitions.group());
         }
-        if (tables.size() != 14) {
-            throw new IOException("The supplied 14-table schema is missing or incomplete.");
+        if (tables.size() != 15) {
+            throw new IOException("The supplied 15-table schema is missing or incomplete.");
         }
 
         try (Connection server = connect(""); Statement statement = server.createStatement()) {

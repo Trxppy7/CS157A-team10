@@ -11,6 +11,7 @@ DROP TABLE Availability;
 DROP TABLE CareTasks;
 DROP TABLE Visits;
 DROP TABLE Bookings;
+DROP TABLE RequestVisits;
 DROP TABLE CareRequests;
 DROP TABLE Pets;
 DROP TABLE CaregiverAnimalTypes;

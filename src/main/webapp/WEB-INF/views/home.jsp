@@ -7,11 +7,10 @@
     <div><dt>Phone</dt><dd><%= Web.escape(request.getAttribute("phone")) %></dd></div>
   </dl>
   <% if ("owner".equals(session.getAttribute("role"))) { %>
-    <p class="form-footer">
-      <a class="button primary" href="<%= request.getContextPath() %>/owner/edit-profile">
-        Edit Profile
-      </a>
-    </p>
+    <nav class="account-actions" aria-label="Owner actions">
+      <a class="button primary" href="<%= request.getContextPath() %>/owner/edit-profile">Edit Profile</a>
+      <a class="button ghost" href="<%= request.getContextPath() %>/owner/requests">Care requests</a>
+    </nav>
   <% } %>
 </main>
 <%@ include file="foot.jspf" %>
