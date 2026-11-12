@@ -45,11 +45,23 @@ CREATE TABLE Pets (
 );
 
 CREATE TABLE CareRequests (
-    request_id INT PRIMARY KEY,
-    service_id INT NOT NULL,
-    pet_id     INT NOT NULL,
+    request_id   INT PRIMARY KEY,
+    service_id   INT NOT NULL,
+    pet_id       INT NOT NULL,
+    location     VARCHAR(200),
+    instructions VARCHAR(500),
+    status       VARCHAR(20) NOT NULL DEFAULT 'open',
+    created_at   VARCHAR(20),
     FOREIGN KEY (service_id) REFERENCES Services(service_id),
     FOREIGN KEY (pet_id) REFERENCES Pets(pet_id)
+);
+
+CREATE TABLE RequestVisits (
+    request_visit_id INT PRIMARY KEY,
+    request_id       INT NOT NULL,
+    visit_date       VARCHAR(10),
+    visit_time       VARCHAR(10),
+    FOREIGN KEY (request_id) REFERENCES CareRequests(request_id)
 );
 
 CREATE TABLE Bookings (

@@ -61,7 +61,7 @@ They use `.local/tomcat` for this project's server files.
 
 The app creates `pawmatch` and loads the sample data on its first run.
 Your MySQL user needs permission to create the database and tables.
-There are 14 tables in `db/schema.sql` and 10 sample rows per table in
+There are 15 tables in `db/schema.sql` and 10 sample rows per table in
 `db/seed.sql`. The app also creates `Accounts` for logins. Later runs keep
 the data already there. Password recovery adds `PasswordResetTokens`.
 Sample owners and caregivers are not login accounts. Create an account with
@@ -132,8 +132,19 @@ VALUES (100, 'admin@example.com', 'paste the hash here', 'admin');
 
 Change the email if needed. There is no admin signup page. The app currently
 covers account creation, login/logout, role access, owner profile editing,
-and password recovery.
-The landing-page care request is still just a demo.
+password recovery, and creating care requests with visit dates, a location,
+and instructions.
+The landing-page care request is still just a demo; owners create real
+requests from the account pages after logging in.
+
+## Owner pages
+
+After logging in as an owner you can:
+
+- **Care requests** (`/owner/requests`) — create a care request for one of
+  your active pets, choosing a service, one or more visit dates and times, a
+  location, and instructions. The request stores its visits in the
+  `RequestVisits` table.
 
 ## Password recovery
 

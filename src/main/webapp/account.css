@@ -68,6 +68,47 @@ input[type=radio], input[type=checkbox] { accent-color: var(--forest); width: 17
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
 .text-button { padding: 0; background: none; border: 0; color: var(--forest); font: inherit; cursor: pointer; }
+
+/* Shared pieces for pets, care requests, matches, and bookings. */
+.button.ghost { background: var(--white); color: var(--forest); border-color: #7e8b78; }
+.button.ghost:hover { background: var(--paper-dark); color: var(--forest); }
+.button.ghost.danger { color: var(--error); border-color: #e3b3a3; }
+.button.ghost.danger:hover { background: #fbece6; }
+.button.small { min-height: 40px; padding: 0 16px; }
+.account-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 22px; }
+.toolbar.spread { justify-content: space-between; }
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 22px 24px; margin-bottom: 16px; }
+.card-muted { background: var(--paper-dark); opacity: .9; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.card-head h2 { margin: 0; font: 600 20px 'Fraunces', Georgia, serif; letter-spacing: -.03em; }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.badge-active { background: #e4f2d5; border-color: #63884c; color: #2f4d1f; }
+.badge-inactive { background: #efe9dc; border-color: #cbc3b0; color: var(--muted); }
+.badge-open { background: #e4f2d5; border-color: #63884c; color: #2f4d1f; }
+.badge-booked { background: #e6eefb; border-color: #8fb0e0; color: #294b7a; }
+.badge-near { background: var(--lime); border-color: #b6cf4e; color: #2f4d1f; }
+.card-facts { margin: 0; display: grid; gap: 6px; }
+.card-facts > div { display: grid; grid-template-columns: 150px 1fr; gap: 16px; }
+.card-facts dt { color: var(--muted); margin: 0; }
+.card-facts dd { margin: 0; overflow-wrap: anywhere; }
+.card-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
+.card-actions form { margin: 0; }
+.empty-state { color: var(--muted); }
+.empty-state p { margin: 0; }
+.field-row { display: flex; gap: 16px; }
+.field-row > .field { flex: 1; }
+.visit-rows { display: grid; gap: 10px; }
+.visit-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: center; }
+.visit-row input { min-height: 44px; }
+.match-meta { color: var(--muted); font-size: 13px; margin: 2px 0 0; }
+.match-why { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+.chip { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #eef1e6; border: 1px solid var(--line); color: var(--forest); }
+@media (max-width: 520px) {
+  .card-facts > div { grid-template-columns: 1fr; gap: 2px; }
+  .visit-row { grid-template-columns: 1fr 1fr; }
+  .field-row { flex-direction: column; gap: 0; }
+}
 .account-main { max-width: 960px; margin: 42px auto 64px; padding: 0 24px; }
 .details { max-width: 720px; margin: 32px 0; }
 .details > div { display: grid; grid-template-columns: 160px 1fr; gap: 24px; border-bottom: 1px solid var(--line); padding: 18px 0; }
