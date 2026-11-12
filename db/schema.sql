@@ -13,6 +13,8 @@ CREATE TABLE Services (
 CREATE TABLE Caregivers (
     caregiver_id INT PRIMARY KEY,
     hourly_rate  INT,
+    service_area VARCHAR(200),
+    status       VARCHAR(20) NOT NULL DEFAULT 'pending',
     name         VARCHAR(100) NOT NULL,
     email        VARCHAR(100) NOT NULL,
     phone_number VARCHAR(20)
@@ -57,16 +59,19 @@ CREATE TABLE RequestVisits (
 );
 
 CREATE TABLE Bookings (
-    booking_id   INT PRIMARY KEY,
+    booking_id   INT AUTO_INCREMENT PRIMARY KEY,
     caregiver_id INT NOT NULL,
-    request_id   INT NOT NULL,
+    request_id   INT NOT NULL UNIQUE,
+    status       VARCHAR(20) NOT NULL DEFAULT 'pending',
+    total_price  DECIMAL(10,2) NOT NULL DEFAULT 0,
     FOREIGN KEY (caregiver_id) REFERENCES Caregivers(caregiver_id),
     FOREIGN KEY (request_id) REFERENCES CareRequests(request_id)
 );
 
 CREATE TABLE Visits (
-    visit_id   INT PRIMARY KEY,
+    visit_id   INT AUTO_INCREMENT PRIMARY KEY,
     visit_date VARCHAR(10),
+    visit_time VARCHAR(10),
     booking_id INT NOT NULL,
     FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
 );

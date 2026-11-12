@@ -22,17 +22,17 @@ INSERT INTO Services (service_id, category) VALUES
 (9, 'Pet Transportation'),
 (10, 'Grooming Visit');
 
-INSERT INTO Caregivers (caregiver_id, hourly_rate, name, email, phone_number) VALUES
-(1, 24, 'Grace Lee', 'grace.lee@example.com', '408-555-0201'),
-(2, 23, 'Marcus Reed', 'marcus.reed@example.com', '408-555-0202'),
-(3, 28, 'Isabella Nguyen', 'isabella.nguyen@example.com', '669-555-0203'),
-(4, 21, 'Henry Wilson', 'henry.wilson@example.com', '650-555-0204'),
-(5, 24, 'Natalie Garcia', 'natalie.garcia@example.com', '415-555-0205'),
-(6, 30, 'Caleb Anderson', 'caleb.anderson@example.com', '510-555-0206'),
-(7, 28, 'Zoe Hernandez', 'zoe.hernandez@example.com', '925-555-0207'),
-(8, 26, 'Owen Clark', 'owen.clark@example.com', '707-555-0208'),
-(9, 25, 'Layla Lewis', 'layla.lewis@example.com', '831-555-0209'),
-(10, 25, 'Julian Walker', 'julian.walker@example.com', '209-555-0210');
+INSERT INTO Caregivers (caregiver_id, hourly_rate, name, email, phone_number, service_area, status) VALUES
+(1, 24, 'Grace Lee', 'grace.lee@example.com', '408-555-0201', 'San Jose, CA', 'active'),
+(2, 23, 'Marcus Reed', 'marcus.reed@example.com', '408-555-0202', 'Santa Clara, CA', 'active'),
+(3, 28, 'Isabella Nguyen', 'isabella.nguyen@example.com', '669-555-0203', 'San Jose, CA', 'active'),
+(4, 21, 'Henry Wilson', 'henry.wilson@example.com', '650-555-0204', 'Palo Alto, CA', 'active'),
+(5, 24, 'Natalie Garcia', 'natalie.garcia@example.com', '415-555-0205', 'San Francisco, CA', 'active'),
+(6, 30, 'Caleb Anderson', 'caleb.anderson@example.com', '510-555-0206', 'Oakland, CA', 'active'),
+(7, 28, 'Zoe Hernandez', 'zoe.hernandez@example.com', '925-555-0207', 'Pleasanton, CA', 'active'),
+(8, 26, 'Owen Clark', 'owen.clark@example.com', '707-555-0208', 'Santa Rosa, CA', 'active'),
+(9, 25, 'Layla Lewis', 'layla.lewis@example.com', '831-555-0209', 'Salinas, CA', 'active'),
+(10, 25, 'Julian Walker', 'julian.walker@example.com', '209-555-0210', 'Stockton, CA', 'active');
 
 INSERT INTO CaregiverAnimalTypes (caregiver_id, animal_type) VALUES
 (1, 'Dog'),
@@ -82,17 +82,17 @@ INSERT INTO RequestVisits (request_visit_id, request_id, visit_date, visit_time)
 (9, 9, '2026-10-11', '08:30'),
 (10, 10, '2026-10-12', '15:00');
 
-INSERT INTO Bookings (booking_id, caregiver_id, request_id) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4),
-(5, 5, 5),
-(6, 6, 6),
-(7, 7, 7),
-(8, 8, 8),
-(9, 9, 9),
-(10, 10, 10);
+INSERT INTO Bookings (booking_id, caregiver_id, request_id, status, total_price) VALUES
+(1, 1, 1, 'accepted', 24),
+(2, 2, 2, 'accepted', 45),
+(3, 3, 3, 'accepted', 28),
+(4, 4, 4, 'accepted', 21),
+(5, 5, 5, 'accepted', 24),
+(6, 6, 6, 'accepted', 30),
+(7, 7, 7, 'accepted', 28),
+(8, 8, 8, 'accepted', 52),
+(9, 9, 9, 'accepted', 75),
+(10, 10, 10, 'accepted', 49);
 
 INSERT INTO Visits (visit_id, visit_date, booking_id) VALUES
 (1, '2026-10-03', 1),
