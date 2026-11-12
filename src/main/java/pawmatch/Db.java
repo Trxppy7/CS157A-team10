@@ -99,6 +99,40 @@ public class Db {
                 throw new SQLException("PawMatch contains unrelated tables. Inspect the database before initializing it.");
             }
             if (found == 0) executeScript(connection, schema);
+            try (ResultSet columns = connection.getMetaData()
+                    .getColumns("pawmatch", null, "Pets", "is_active")) {
+                if (!columns.next()) {
+                    try (Statement statement = connection.createStatement()) {
+                        statement.executeUpdate(
+                                "ALTER TABLE Pets ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT TRUE");
+                    }
+                }
+            }
+
+            String[][] petColumns = {
+                {"breed_description", "VARCHAR(100)"},
+                {"age", "INT"},
+                {"size", "VARCHAR(30)"},
+                {"medication_instructions", "VARCHAR(500)"},
+                {"feeding_instructions", "VARCHAR(500)"},
+                {"behavior_notes", "VARCHAR(500)"},
+                {"vet_contact", "VARCHAR(200)"},
+                {"photo_filename", "VARCHAR(255)"}
+            };
+
+            for (String[] column : petColumns) {
+                try (ResultSet columns = connection.getMetaData()
+                        .getColumns("pawmatch", null, "Pets", column[0])) {
+                    if (!columns.next()) {
+                        try (Statement statement = connection.createStatement()) {
+                            statement.executeUpdate(
+                                    "ALTER TABLE Pets ADD COLUMN "
+                                    + column[0] + " " + column[1]);
+                        }
+                    }
+                }
+            }
+
             for (Map.Entry<String, String> table : tables.entrySet()) {
                 checkColumns(connection, table.getKey(), table.getValue());
             }

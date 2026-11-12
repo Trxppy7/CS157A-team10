@@ -26,13 +26,21 @@ CREATE TABLE CaregiverAnimalTypes (
 );
 
 CREATE TABLE Pets (
-    pet_id       INT PRIMARY KEY,
+    pet_id       INT AUTO_INCREMENT PRIMARY KEY,
     owner_id     INT NOT NULL,
     contact_name VARCHAR(100),
     conditions   VARCHAR(200),
     species      VARCHAR(30),
     name         VARCHAR(50) NOT NULL,
-    active       INT NOT NULL DEFAULT 1,
+    breed_description VARCHAR(100),
+    age          INT,
+    size         VARCHAR(30),
+    medication_instructions VARCHAR(500),
+    feeding_instructions VARCHAR(500),
+    behavior_notes VARCHAR(500),
+    vet_contact VARCHAR(200),
+    photo_filename VARCHAR(255),
+    is_active    BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (owner_id) REFERENCES Owners(owner_id)
 );
 
