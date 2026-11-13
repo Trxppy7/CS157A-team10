@@ -9,6 +9,7 @@
   <% if ("owner".equals(session.getAttribute("role"))) { %>
     <nav class="account-actions" aria-label="Owner actions">
       <a class="button primary" href="<%= request.getContextPath() %>/owner/edit-profile">Edit Profile</a>
+      <a class="button primary" href="<%= request.getContextPath() %>/owner/pets">My Pets</a>
       <a class="button ghost" href="<%= request.getContextPath() %>/owner/requests">Care requests</a>
     </nav>
   <% } %>

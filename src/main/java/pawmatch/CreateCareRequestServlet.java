@@ -87,7 +87,7 @@ public class CreateCareRequestServlet extends HttpServlet {
                     // Confirm the pet is the owner's and still active.
                     boolean ok = false;
                     try (PreparedStatement check = connection.prepareStatement(
-                            "SELECT pet_id FROM Pets WHERE pet_id = ? AND owner_id = ? AND active = 1")) {
+                            "SELECT pet_id FROM Pets WHERE pet_id = ? AND owner_id = ? AND is_active = 1")) {
                         check.setInt(1, petId);
                         check.setInt(2, ownerId);
                         try (ResultSet rows = check.executeQuery()) {
@@ -156,7 +156,7 @@ public class CreateCareRequestServlet extends HttpServlet {
         List<Map<String, Object>> services = new ArrayList<>();
         try (Connection connection = Db.open()) {
             try (PreparedStatement query = connection.prepareStatement(
-                    "SELECT pet_id, name, species FROM Pets WHERE owner_id = ? AND active = 1 ORDER BY name")) {
+                    "SELECT pet_id, name, species FROM Pets WHERE owner_id = ? AND is_active = 1 ORDER BY name")) {
                 query.setInt(1, ownerId);
                 try (ResultSet rows = query.executeQuery()) {
                     while (rows.next()) {
