@@ -13,5 +13,8 @@
       <a class="button ghost" href="<%= request.getContextPath() %>/owner/requests">Care requests</a>
     </nav>
   <% } %>
+  <% if ("owner".equals(session.getAttribute("role"))) { %>
+    <p><a href="<%= request.getContextPath() %>/owner/bookings">My bookings</a></p>
+  <% } %>
 </main>
 <%@ include file="foot.jspf" %>

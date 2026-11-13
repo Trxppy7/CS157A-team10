@@ -153,3 +153,39 @@ to the address you use for the app: port 8081 for `run.sh`, usually 8080 in Ecli
 Without SMTP settings, the app runs but cannot send recovery emails.
 Reset links expire after 30 minutes and work once. A successful reset invalidates
 the account's other links. Reset records are stored in MySQL.
+
+## Caregiver matches and booking requests
+
+Owners can open Care requests, choose View caregiver matches, and request a
+booking. A match needs the same city and state, the requested service, experience
+with the pet's animal type, and a free slot for every visit. City names ignore
+capitalization and spaces at the ends. Use a location like `San Jose, CA`, not a
+street address.
+
+Availability rows are individual visit slots. An exact visit time needs a slot
+at that time; a date without a time uses the first free slot that day. Prices
+come from `CaregiverServices.price` per visit. A booking starts as `pending`,
+reserves its slots, and puts the care request on hold. My bookings shows its
+status, price, and scheduled visits. Caregiver acceptance is a separate feature.
+
+For an existing database that already has `RequestVisits`, stop the app and run
+this once before starting the updated app:
+
+```sh
+mysql -h 127.0.0.1 -P 3306 -u root -p pawmatch < db/matching.sql
+```
+
+This keeps the saved data. Existing caregivers need their `service_area` filled
+in and `status` set to `active` before matching. New caregivers start as
+`pending`. Fresh sample caregivers already have these fields filled in.
+
+## Check matching
+
+Use a test database with `db/schema.sql` installed. The test reads `DB_USER`
+and `DB_PASSWORD` from your environment and rolls back its sample rows.
+
+```sh
+./build.sh
+javac -cp 'build/classes:src/main/webapp/WEB-INF/lib/*' -d build/classes tests/CaregiverMatchesTest.java
+java -cp 'build/classes:src/main/webapp/WEB-INF/lib/*' pawmatch.CaregiverMatchesTest 'jdbc:mysql://127.0.0.1:3306/pawmatch_test'
+```

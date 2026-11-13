@@ -38,6 +38,13 @@
         <div><dt>Visits</dt><dd><%= req.get("visits") %></dd></div>
         <div><dt>Requested</dt><dd><%= req.get("created") == null ? "&mdash;" : Web.escape(req.get("created")) %></dd></div>
       </dl>
+      <div class="card-actions">
+        <% if ("open".equals(status)) { %>
+          <a class="button primary small" href="<%= request.getContextPath() %>/owner/matches?requestId=<%= req.get("id") %>">View caregiver matches</a>
+        <% } else { %>
+          <a href="<%= request.getContextPath() %>/owner/bookings">View bookings</a>
+        <% } %>
+      </div>
     </article>
   <%
       }

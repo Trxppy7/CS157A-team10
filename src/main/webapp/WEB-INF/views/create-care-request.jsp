@@ -58,8 +58,8 @@
     </div>
 
     <div class="field">
-      <label for="location">Location</label>
-      <input id="location" name="location" value="<%= Web.value(request, "location") %>"<%= Web.invalid(request, "location") %> maxlength="200" placeholder="City or address where care is needed" required>
+      <label for="location">City and state</label>
+      <input id="location" placeholder="San Jose, CA" name="location" value="<%= Web.value(request, "location") %>"<%= Web.invalid(request, "location") %> maxlength="200" required>
       <%= Web.error(request, "location") %>
     </div>
 
