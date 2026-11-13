@@ -46,7 +46,7 @@ public class CaregiverMatches {
         try (PreparedStatement query = connection.prepareStatement(
                 "SELECT c.caregiver_id, c.name, c.service_area, s.price "
                 + "FROM Caregivers c, CaregiverServices s, CaregiverAnimalTypes t, CareRequests r, Pets p "
-                + "WHERE r.request_id = ? AND r.pet_id = p.pet_id AND p.active = 1 AND r.status = 'open' "
+                + "WHERE r.request_id = ? AND r.pet_id = p.pet_id AND p.is_active = 1 AND r.status = 'open' "
                 + "AND s.caregiver_id = c.caregiver_id AND s.service_id = r.service_id "
                 + "AND t.caregiver_id = c.caregiver_id AND LOWER(t.animal_type) = LOWER(p.species) "
                 + "AND LOWER(TRIM(c.service_area)) = LOWER(TRIM(r.location)) AND c.status = 'active' "

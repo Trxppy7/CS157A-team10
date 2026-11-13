@@ -55,9 +55,9 @@ public class CaregiverMatchesTest {
                 sql(connection, "DELETE FROM Availability WHERE availability_id = 900002");
                 check(connection, 0, "Not enough separate slots");
                 sql(connection, "INSERT INTO Availability VALUES (900002, '2099-01-01 10:00:00', 900001)");
-                sql(connection, "UPDATE Pets SET active = 0 WHERE pet_id = 900001");
+                sql(connection, "UPDATE Pets SET is_active = 0 WHERE pet_id = 900001");
                 check(connection, 0, "Inactive pet");
-                sql(connection, "UPDATE Pets SET active = 1 WHERE pet_id = 900001");
+                sql(connection, "UPDATE Pets SET is_active = 1 WHERE pet_id = 900001");
                 sql(connection, "UPDATE CareRequests SET status = 'held' WHERE request_id = 900001");
                 check(connection, 0, "Already held request");
                 sql(connection, "UPDATE CareRequests SET status = 'open' WHERE request_id = 900001");
