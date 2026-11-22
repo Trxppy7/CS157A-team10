@@ -67,10 +67,11 @@ the data already there. Password recovery adds `PasswordResetTokens`.
 Sample owners and caregivers are not login accounts. Create an account with
 a different email on the registration page.
 
-If only some tables or sample data are present, or a required column is
-missing or has the wrong type, startup stops and prints the problem in the
-Tomcat log. Check the database before resetting it. MySQL table creation
-cannot be rolled back.
+If required tables are missing or columns have the wrong type, startup
+stops and prints the problem in the Tomcat log. Empty tables are allowed
+even when other tables contain data. Check the database before resetting it.
+MySQL table creation cannot be rolled back.
+
 Older local databases can keep their decimal money columns and date columns;
 the app does not convert or delete those values.
 

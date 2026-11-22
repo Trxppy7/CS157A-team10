@@ -152,9 +152,6 @@ public class Db {
                     if (rows.getLong(1) == 0) empty++;
                 }
             }
-            if (empty != 0 && empty != tables.size()) {
-                throw new SQLException("PawMatch is partly populated. Startup kept the data; use the explicit reset command only if intended.");
-            }
             if (empty == tables.size()) {
                 connection.setAutoCommit(false);
                 try {
